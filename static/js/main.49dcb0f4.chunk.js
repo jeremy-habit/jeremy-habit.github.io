@@ -1,0 +1,2 @@
+(this["webpackJsonpjeremy-habit-cv"]=this["webpackJsonpjeremy-habit-cv"]||[]).push([[0],{9:function(e,t,c){"use strict";c.r(t);var n=c(0),r=c.n(n),s=c(3),i=c.n(s),o=c(1),h=function(){return Object(o.jsx)("div",{children:"hello cosmos"})};i.a.render(Object(o.jsx)(r.a.StrictMode,{children:Object(o.jsx)(h,{})}),document.getElementById("root"))}},[[9,1,2]]]);
+//# sourceMappingURL=main.49dcb0f4.chunk.js.map

@@ -1,0 +1,1 @@
+{"version":3,"sources":["module/Translation/locales/en/common.ts"],"names":["welcome"],"mappings":"wHAAA,OAAe,WACXA,QAAS","file":"static/js/0.b0c9385b.chunk.js","sourcesContent":["export default {\n    welcome: 'Welcome !',\n};\n"],"sourceRoot":""}

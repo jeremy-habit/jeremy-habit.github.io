@@ -1,0 +1,14 @@
+@import-normalize;
+
+@font-face {
+    font-family: 'gameria';
+    src: local('gameria'), url('fonts/gameria.ttf') format('truetype');
+}
+
+* {
+    font-family: 'roboto', sans-serif;
+}
+
+body {
+    margin: 0;
+}

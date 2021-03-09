@@ -1,8 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Trans } from '../translation/Trans';
 import { LangContextProvider } from '#components/translation/translations.context';
-import { Languages, Namespaces } from '../translation/translations.types';
-import { TopBar } from './TopBar';
+import { Languages } from '#components/translation/translations.types';
+import { TopBar } from '#components/layout/topBar/TopBar';
 
 export const App: FC = () => {
     const { LANG_FR, LANG_EN } = Languages;
@@ -32,6 +31,7 @@ export const App: FC = () => {
     return (
         <LangContextProvider value={{ lang, setLang }}>
             <TopBar />
+            <h1>Jeremy habit</h1>
         </LangContextProvider>
     );
 };

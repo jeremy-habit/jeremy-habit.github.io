@@ -4,7 +4,9 @@
         "paths": {
             "#components/*": ["./src/components/*"],
             "#locales/*": ["./src/locales/*"],
-            "#public/*": ["./src/public/*"]
+            "#public/*": ["./src/public/*"],
+            "#utils/*": ["./src/utils/*"],
+            "#hooks/*": ["./src/hooks/*"]
         }
     }
 }

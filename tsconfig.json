@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "esModuleInterop": true,
     "jsx": "react-jsx",
@@ -18,11 +19,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "baseUrl": "./src",
-    "paths": {
-      "#components/*": ["./components/*"],
-    }
+    "noEmit": true
   },
   "exclude": [
     "node_modules"

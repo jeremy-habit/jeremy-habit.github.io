@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
-import { LangContextProvider } from '#components/translation/translations.context';
 import { TopBar } from '#components/layout/topBar/TopBar';
+import { Translator, LanguageContextProvider } from '#modules/react-translation';
 
 export const App: FC = () => {
     return (
-        <LangContextProvider>
+        <LanguageContextProvider>
             <TopBar />
-        </LangContextProvider>
+            <Translator keyFullPath="test:welcome.coucoud" />
+        </LanguageContextProvider>
     );
 };

@@ -6,7 +6,8 @@
             "#locales/*": ["./src/locales/*"],
             "#public/*": ["./src/public/*"],
             "#utils/*": ["./src/utils/*"],
-            "#hooks/*": ["./src/hooks/*"]
+            "#hooks/*": ["./src/hooks/*"],
+            "#modules/*": ["./src/modules/*"]
         }
     }
 }

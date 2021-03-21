@@ -1,0 +1,1 @@
+{"version":3,"sources":["modules/translation/translationObjects/en/test.ts"],"names":["welcome","coucou"],"mappings":"yHAAA,OAAe,WACXA,QAAS,CAAEC,OAAQ","file":"static/js/1.da23608d.chunk.js","sourcesContent":["export default {\n    welcome: { coucou: '####@@###### welcome coucou' },\n};\n"],"sourceRoot":""}

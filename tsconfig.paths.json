@@ -3,8 +3,6 @@
         "baseUrl": ".",
         "paths": {
             "#components/*": ["./src/components/*"],
-            "#locales/*": ["./src/locales/*"],
-            "#public/*": ["./src/public/*"],
             "#utils/*": ["./src/utils/*"],
             "#hooks/*": ["./src/hooks/*"],
             "#modules/*": ["./src/modules/*"]

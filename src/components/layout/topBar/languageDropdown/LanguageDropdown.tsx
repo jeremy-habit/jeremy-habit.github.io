@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
-import { Languages, useLanguageContext } from '#modules/react-translation';
 import { ucFirst } from '#utils/string.utils';
 import { StyledDropdown } from './languageDropdown.styled';
+import { Languages } from '#modules/react-translation/types';
+import { useLanguageContext } from '#modules/react-translation/context';
 
 export const LanguageDropdown: FC = () => {
     const { LANGUAGE_FR, LANGUAGE_EN } = Languages;

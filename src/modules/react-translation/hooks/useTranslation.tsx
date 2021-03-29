@@ -1,25 +1,21 @@
 import { useEffect, useState } from 'react';
-import {
-    DEFAULT_TRANSLATION_FILE,
-    importNamespace,
-    Namespace,
-    translate,
-    TranslationFileNameList,
-    TranslationHook,
-    useLanguageContext,
-} from '#modules/react-translation';
+import { TranslationFile, TranslationFileNameList, TranslationHook } from '../types';
+import { DEFAULT_TRANSLATION_FILE_NAME } from '../constants';
+import { useLanguageContext } from '../context';
+import { translate } from '../utils/translation.utils';
+import { importTranslationFile } from '../utils/translationFiles.utils';
 
-export const useTranslation = (translationFileNameList: TranslationFileNameList = [DEFAULT_TRANSLATION_FILE]): TranslationHook => {
+export const useTranslation = (translationFileNameList: TranslationFileNameList = [DEFAULT_TRANSLATION_FILE_NAME]): TranslationHook => {
     const { language } = useLanguageContext();
-    const [namespaces, setNamespaces] = useState<Namespace[] | undefined>();
+    const [translationFiles, setTranslationFiles] = useState<TranslationFile[] | undefined>();
 
-    const prepareNamespace = async () => {
+    const prepareTranslationFiles = async () => {
         try {
-            const promises = translationFileNameList.map((namespaceName) => {
-                return importNamespace(language, namespaceName);
+            const promises = translationFileNameList.map((fileName) => {
+                return importTranslationFile(language, fileName);
             });
             await Promise.all(promises).then((values) => {
-                setNamespaces(values);
+                setTranslationFiles(values);
             });
         } catch (error) {
             console.error(error);
@@ -27,12 +23,12 @@ export const useTranslation = (translationFileNameList: TranslationFileNameList 
     };
 
     useEffect(() => {
-        prepareNamespace();
+        prepareTranslationFiles();
     }, [language]);
 
     return {
         t: (key: string) => {
-            return translate(language, key, namespaces);
+            return translate(language, key, translationFiles);
         },
     };
 };

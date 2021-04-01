@@ -1,12 +1,10 @@
-import { Languages, TranslationFile, TranslationFileImported } from '../types';
-import { TRANSLATION_FILES_DIR_NAME } from '../constants';
+import { Languages, TF, TFImported, TFName } from '../types';
+import { TFS_DIR_NAME } from '../constants';
 
-export const importTranslationFile = async (language: Languages, translationFileName: string): Promise<TranslationFile> => {
+export const importTF = async (language: Languages, tFName: TFName): Promise<TF> => {
     try {
-        const importedTranslationFile: TranslationFileImported = await import(
-            `../${TRANSLATION_FILES_DIR_NAME}/${language}/${translationFileName}`
-        );
-        return { name: translationFileName, content: importedTranslationFile.default };
+        const tFImported: TFImported = await import(`../${TFS_DIR_NAME}/${language}/${tFName}`);
+        return { name: tFName, content: tFImported.default };
     } catch (error) {
         throw new Error(error);
     }

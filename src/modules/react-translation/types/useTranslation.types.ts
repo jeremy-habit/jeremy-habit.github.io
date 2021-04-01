@@ -1,5 +1,5 @@
-export interface TranslationHook {
-    t: TFunction;
+export interface UseTranslationHook {
+    translate: TranslateFunction;
 }
 
-export type TFunction = (key: string) => string;
+export type TranslateFunction = (key: string) => string;

@@ -1,25 +1,37 @@
-import { Languages, TranslationFilesList } from '../types';
-import { getKeyPathValue, get, splitAllKeys, splitKeyFullPath } from './keyFullPath.utils';
-import { errorObjectGiven, errorKeyDoesntExists, errorTranslationFileNotAvailable } from './errors.utils';
+import { Languages, TFs } from '../types';
+import { getKeyPathValue, findKeyPathValueFromTFs, splitAllKeys, splitKeyFullPath, hasTFName } from './keyFullPath.utils';
+import { errorObjectGiven, errorKeyDoesntExists, errorTFNotAvailable } from './errors.utils';
 
-export const translate = (language: Languages, keyFullPath: string, translationFilesList?: TranslationFilesList): string => {
-    if (!translationFilesList || !Array.isArray(translationFilesList) || translationFilesList.length < 1) return '';
-
-    const { translationFileName, keyPath } = splitKeyFullPath(keyFullPath);
+const translateWithTargetedTFName = (language: Languages, keyFullPath: string, tFs: TFs) => {
+    const { tFName, keyPath } = splitKeyFullPath(keyFullPath);
     const splittedKeys = splitAllKeys(keyPath);
+    const tFTargeted = tFs.find((tF) => tF.name === tFName);
+    if (!tFTargeted) throw new Error(errorTFNotAvailable(tFName));
+    const keyPathValue = getKeyPathValue(splittedKeys, tFTargeted);
 
-    let keyPathValueFound;
+    if (!keyPathValue) throw new Error(errorKeyDoesntExists(language, keyPath, tFName));
+    if (typeof keyPathValue === 'object') throw new Error(errorObjectGiven(language, keyPath, tFName));
 
-    if (translationFileName) {
-        const translationFileFromPath = translationFilesList.find((translationFile) => translationFile.name === translationFileName);
-        if (!translationFileFromPath) throw new Error(errorTranslationFileNotAvailable(translationFileName));
-        keyPathValueFound = getKeyPathValue(splittedKeys, translationFileFromPath);
-    } else {
-        keyPathValueFound = get(splittedKeys, translationFilesList);
+    return keyPathValue;
+};
+
+const translateWithoutTargetedTFName = (language: Languages, keyFullPath: string, tFs: TFs) => {
+    const splittedKeys = splitAllKeys(keyFullPath);
+    const { tF, value } = findKeyPathValueFromTFs(splittedKeys, tFs);
+    const tFNamesRange = `{${tFs.map((currentTF) => currentTF.name).join(' | ')}}`;
+
+    if (!value) throw new Error(errorKeyDoesntExists(language, keyFullPath, tFNamesRange));
+    if (typeof value === 'object') throw new Error(errorObjectGiven(language, keyFullPath, tF?.name));
+
+    return value;
+};
+
+export const translate = (language: Languages, keyFullPath: string, tFs?: TFs): string => {
+    if (!tFs || !Array.isArray(tFs) || tFs.length < 1) return '';
+
+    if (hasTFName(keyFullPath)) {
+        return translateWithTargetedTFName(language, keyFullPath, tFs);
     }
 
-    if (!keyPathValueFound.value) throw new Error(errorKeyDoesntExists(language, keyPath, keyPathValueFound.translationFileName));
-    if (typeof keyPathValueFound.value === 'object')
-        throw new Error(errorObjectGiven(language, keyPath, keyPathValueFound.translationFileName));
-    return keyPathValueFound.value;
+    return translateWithoutTargetedTFName(language, keyFullPath, tFs);
 };

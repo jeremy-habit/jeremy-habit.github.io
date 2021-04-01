@@ -1,30 +1,30 @@
 import { useEffect, useState } from 'react';
-import { TranslationFile, TranslationFileNameList, TranslationHook } from '../types';
-import { DEFAULT_TRANSLATION_FILE_NAME } from '../constants';
+import { TFNames, TFs, UseTranslationHook } from '../types';
+import { DEFAULT_TF_NAME } from '../constants';
 import { useLanguageContext } from '../context';
 import { translate } from '../utils/translation.utils';
-import { importTranslationFile } from '../utils/translationFiles.utils';
+import { importTF } from '../utils/translationFiles.utils';
 
-export const useTranslation = (translationFileNameList: TranslationFileNameList = [DEFAULT_TRANSLATION_FILE_NAME]): TranslationHook => {
+export const useTranslation = (tFNames: TFNames = [DEFAULT_TF_NAME]): UseTranslationHook => {
     const { language } = useLanguageContext();
-    const [translationFiles, setTranslationFiles] = useState<TranslationFile[] | undefined>();
+    const [tFs, setTFs] = useState<TFs | undefined>();
 
-    const prepareTranslationFiles = async () => {
-        const promises = translationFileNameList.map((fileName) => {
-            return importTranslationFile(language, fileName);
+    const prepareTFs = async () => {
+        const promises = tFNames.map((tFName) => {
+            return importTF(language, tFName);
         });
         await Promise.all(promises).then((values) => {
-            setTranslationFiles(values);
+            setTFs(values);
         });
     };
 
     useEffect(() => {
-        prepareTranslationFiles();
+        prepareTFs();
     }, [language]);
 
     return {
-        t: (keyFullPath: string) => {
-            return translate(language, keyFullPath, translationFiles);
+        translate: (keyFullPath: string) => {
+            return translate(language, keyFullPath, tFs);
         },
     };
 };

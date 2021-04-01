@@ -1,11 +1,13 @@
-export type TranslationFileName = string;
+import { KeyPathValue } from '#modules/react-translation/types/keyFullPath.types';
 
-export type TranslationFileNameList = TranslationFileName[];
+export type TFName = string;
 
-export type TranslationFileContent = { [key: string]: string | TranslationFileContent };
+export type TFNames = TFName[];
 
-export type TranslationFile = { name: string; content: TranslationFileContent };
+export type TFContent = { [key: string]: KeyPathValue };
 
-export type TranslationFilesList = TranslationFile[];
+export type TFImported = { default: TFContent };
 
-export type TranslationFileImported = { default: TranslationFileContent };
+export type TF = { name: TFName; content: TFContent };
+
+export type TFs = TF[];

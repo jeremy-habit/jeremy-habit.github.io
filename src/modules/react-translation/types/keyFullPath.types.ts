@@ -1,5 +1,7 @@
-import { TranslationFileContent } from '#modules/react-translation/types/translationFiles.types';
+import { TF, TFContent, TFName } from '#modules/react-translation/types/translationFiles.types';
 
-export type KeyFullPathCouple = { translationFileName: string | null; keyPath: string };
+export type KeyFullPathSplitted = { tFName: TFName; keyPath: string };
 
-export type KeyPathValue = { translationFileName: string; value: TranslationFileContent | string | undefined };
+export type KeyPathValue = TFContent | string | undefined;
+
+export type KeyPathValueFound = { tF?: TF; value?: KeyPathValue };

@@ -1,5 +1,6 @@
 import { KEY_SEPARATOR, TRANSLATION_FILES_SEPARATOR } from '../constants';
 import { TranslationFileContent, TranslationFilesList } from '../types';
+import { errorKeyPathEmpty, errorTooManySeparators, errorTranslationFileNameEmpty } from '#modules/react-translation/utils/errors.utils';
 
 export const getKeyPathValue = (
     splittedKeys: string[],
@@ -15,12 +16,13 @@ export const getKeyPathValue = (
     return translatedValues.find((elt) => elt);
 };
 
-// TODO(@jeremyhabit): error throw text  + vérif
 export const splitKeyFullPath = (keyFullPath: string): { translationFileName: string | null; keyPath: string } => {
     if (keyFullPath.includes(TRANSLATION_FILES_SEPARATOR)) {
         const splitted = keyFullPath.split(TRANSLATION_FILES_SEPARATOR);
-        if (splitted.length !== 2) throw new Error('ca va pas du tout la');
+        if (splitted.length > 2) throw new Error(errorTooManySeparators(TRANSLATION_FILES_SEPARATOR, keyFullPath, false));
         const [translationFileName, keyPath] = splitted;
+        if (!translationFileName) throw new Error(errorTranslationFileNameEmpty(keyFullPath, false));
+        if (!keyPath) throw new Error(errorKeyPathEmpty(keyFullPath, false));
         return { translationFileName, keyPath };
     }
     return { translationFileName: null, keyPath: keyFullPath };

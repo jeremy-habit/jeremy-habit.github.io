@@ -1,10 +1,23 @@
 import { Languages } from '#modules/react-translation/types';
 import { ERROR_PREFIX, ERROR_SUFFIX } from '#modules/react-translation/constants';
 
-export const formatError = (errorMessage: string): string => `${ERROR_PREFIX} ${errorMessage} ${ERROR_SUFFIX}`;
+export const formatError = (errorMessage: string, withFormat: boolean): string =>
+    withFormat ? `${ERROR_PREFIX} ${errorMessage} ${ERROR_SUFFIX}` : errorMessage;
 
-export const errorObjectGiven = (language: Languages, keyPath: string): string =>
-    formatError(`The key ${language}.${keyPath} is an object. String expected`);
+export const errorObjectGiven = (language: Languages, keyPath: string, withFormat = true): string =>
+    formatError(`The key ${language}.${keyPath} is an object. String expected`, withFormat);
 
-export const errorKeyDoesntExists = (language: Languages, keyPath: string): string =>
-    formatError(`The key ${language}.${keyPath} doesn't exists`);
+export const errorKeyDoesntExists = (language: Languages, keyPath: string, withFormat = true): string =>
+    formatError(`The key ${language}.${keyPath} doesn't exists`, withFormat);
+
+export const errorTooManySeparators = (separator: string, keyFullPath: string, withFormat = true): string =>
+    formatError(`The key ${keyFullPath} contains too many separators. Only one "${separator}" is expected.`, withFormat);
+
+export const errorKeyPathEmpty = (keyFullPath: string, withFormat = true): string =>
+    formatError(`There are no keys after the translation file name in the following key full path "${keyFullPath}???"`, withFormat);
+
+export const errorTranslationFileNameEmpty = (keyFullPath: string, withFormat = true): string =>
+    formatError(
+        `The translation file name is missing before the separator ":" in the following key full path "???${keyFullPath}"`,
+        withFormat,
+    );

@@ -6,7 +6,7 @@ export const App: FC = () => {
     return (
         <LanguageContextProvider>
             <TopBar />
-            <Translator keyFullPath="test:welcome.coucoud" />
+            <Translator target=":" />
         </LanguageContextProvider>
     );
 };

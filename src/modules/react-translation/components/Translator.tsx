@@ -4,11 +4,11 @@ import { DEFAULT_TRANSLATION_FILE_NAME } from '../constants';
 import { splitKeyFullPath } from '../utils/keyFullPath.utils';
 
 interface Props {
-    keyFullPath: string;
+    target: string;
 }
 
-export const Translator: FC<Props> = ({ keyFullPath }) => {
-    const { translationFileName, keyPath } = splitKeyFullPath(keyFullPath);
+export const Translator: FC<Props> = ({ target }) => {
+    const { translationFileName, keyPath } = splitKeyFullPath(target);
     const { t } = useTranslation(translationFileName ? [translationFileName] : [DEFAULT_TRANSLATION_FILE_NAME]);
     return <>{t(keyPath)}</>;
 };

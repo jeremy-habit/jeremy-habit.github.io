@@ -10,16 +10,12 @@ export const useTranslation = (translationFileNameList: TranslationFileNameList 
     const [translationFiles, setTranslationFiles] = useState<TranslationFile[] | undefined>();
 
     const prepareTranslationFiles = async () => {
-        try {
-            const promises = translationFileNameList.map((fileName) => {
-                return importTranslationFile(language, fileName);
-            });
-            await Promise.all(promises).then((values) => {
-                setTranslationFiles(values);
-            });
-        } catch (error) {
-            console.error(error);
-        }
+        const promises = translationFileNameList.map((fileName) => {
+            return importTranslationFile(language, fileName);
+        });
+        await Promise.all(promises).then((values) => {
+            setTranslationFiles(values);
+        });
     };
 
     useEffect(() => {
@@ -27,8 +23,8 @@ export const useTranslation = (translationFileNameList: TranslationFileNameList 
     }, [language]);
 
     return {
-        t: (key: string) => {
-            return translate(language, key, translationFiles);
+        t: (keyFullPath: string) => {
+            return translate(language, keyFullPath, translationFiles);
         },
     };
 };

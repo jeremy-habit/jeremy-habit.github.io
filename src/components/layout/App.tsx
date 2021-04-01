@@ -6,7 +6,7 @@ export const App: FC = () => {
     return (
         <LanguageContextProvider>
             <TopBar />
-            <Translator target=":" />
+            {/* <Translator target="welcome.coucou" /> */}
         </LanguageContextProvider>
     );
 };

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TFNames, TFs, UseTranslationHook } from '../types';
+import { TFNames, TFs, TranslationVariables, UseTranslationHook } from '../types';
 import { DEFAULT_TF_NAME } from '../constants';
 import { useLanguageContext } from '../context';
 import { translate } from '../utils/translation.utils';
@@ -23,8 +23,8 @@ export const useTranslation = (tFNames: TFNames = [DEFAULT_TF_NAME]): UseTransla
     }, [language]);
 
     return {
-        translate: (keyFullPath: string) => {
-            return translate(language, keyFullPath, tFs);
+        translate: (keyFullPath: string, variables?: TranslationVariables) => {
+            return translate(language, keyFullPath, tFs, variables);
         },
     };
 };

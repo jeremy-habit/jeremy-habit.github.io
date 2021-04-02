@@ -6,7 +6,7 @@ export const App: FC = () => {
     return (
         <LanguageContextProvider>
             <TopBar />
-            <Translator keyFullPath="welcome.coucou" />
+            <Translator keyFullPath="common:welcome.coucou" variables={{ sd: 'titre en gras' }} />
         </LanguageContextProvider>
     );
 };

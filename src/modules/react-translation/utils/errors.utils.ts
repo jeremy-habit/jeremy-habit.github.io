@@ -17,3 +17,6 @@ export const errorTFNameEmpty = (keyFullPath: string): string =>
 
 export const errorTFNotAvailable = (tFName: TFName): string =>
     `The translation file with the name "${tFName}" is not available. Please make sure you added it in the translation files array argument for the hook useTranslation.`;
+
+export const errorVariableisMissing = (searchedVariable: string, translatedValue: string): string =>
+    `The variable ${searchedVariable} is missing in : "${translatedValue}"`;

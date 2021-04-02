@@ -1,6 +1,7 @@
-import { Languages, TFs } from '../types';
+import { Languages, TFs, TranslationVariables } from '../types';
 import { getKeyPathValue, findKeyPathValueFromTFs, splitAllKeys, splitKeyFullPath, hasTFName } from './keyFullPath.utils';
-import { errorObjectGiven, errorKeyDoesntExists, errorTFNotAvailable } from './errors.utils';
+import { errorObjectGiven, errorKeyDoesntExists, errorTFNotAvailable, errorVariableisMissing } from './errors.utils';
+import { VARIABLE_PREFIX, VARIABLE_SUFFIX } from '#modules/react-translation/constants';
 
 const translateWithTargetedTFName = (language: Languages, keyFullPath: string, tFs: TFs) => {
     const { tFName, keyPath } = splitKeyFullPath(keyFullPath);
@@ -26,12 +27,28 @@ const translateWithoutTargetedTFName = (language: Languages, keyFullPath: string
     return value;
 };
 
-export const translate = (language: Languages, keyFullPath: string, tFs?: TFs): string => {
+export const solveVariables = (translatedValue: string, variables: TranslationVariables): string => {
+    return Object.entries(variables).reduce((acc, curr) => {
+        const variable = {
+            key: curr[0],
+            value: curr[1].toString(),
+        };
+        const searchedVariable = `${VARIABLE_PREFIX}${variable.key}${VARIABLE_SUFFIX}`;
+        if (!translatedValue.includes(searchedVariable)) throw new Error(errorVariableisMissing(searchedVariable, translatedValue));
+        return acc.replaceAll(searchedVariable, variable.value);
+    }, translatedValue);
+};
+
+export const translate = (language: Languages, keyFullPath: string, tFs?: TFs, variables?: TranslationVariables): string => {
     if (!tFs || !Array.isArray(tFs) || tFs.length < 1) return '';
 
+    let translatedValue;
+
     if (hasTFName(keyFullPath)) {
-        return translateWithTargetedTFName(language, keyFullPath, tFs);
+        translatedValue = translateWithTargetedTFName(language, keyFullPath, tFs);
+    } else {
+        translatedValue = translateWithoutTargetedTFName(language, keyFullPath, tFs);
     }
 
-    return translateWithoutTargetedTFName(language, keyFullPath, tFs);
+    return variables ? solveVariables(translatedValue, variables) : translatedValue;
 };

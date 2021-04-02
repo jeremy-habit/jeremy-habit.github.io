@@ -1,5 +1,5 @@
 export default {
     welcome: {
-        coucou: 'BONjour  ',
+        coucou: 'BONjour  {{sd}} ',
     },
 };

@@ -2,4 +2,6 @@ export interface UseTranslationHook {
     translate: TranslateFunction;
 }
 
-export type TranslateFunction = (key: string) => string;
+export type TranslationVariables = { [key: string]: string | number };
+
+export type TranslateFunction = (key: string, variables?: TranslationVariables) => string;

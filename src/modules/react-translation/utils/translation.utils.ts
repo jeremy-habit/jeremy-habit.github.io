@@ -1,4 +1,4 @@
-import { Languages, TFs, TranslationVariables } from '../types';
+import { Language, TFs, TranslationVariables } from '../types';
 import {
     errorObjectGiven,
     errorKeyDoesntExists,
@@ -12,7 +12,7 @@ import {
 } from './index';
 import { VARIABLE_PREFIX, VARIABLE_SUFFIX } from '../constants';
 
-const translateWithTargetedTFName = (language: Languages, keyFullPath: string, tFs: TFs) => {
+const translateWithTargetedTFName = (language: Language, keyFullPath: string, tFs: TFs) => {
     const { tFName, keyPath } = splitKeyFullPath(keyFullPath);
     const splittedKeys = splitAllKeys(keyPath);
     const tFTargeted = tFs.find((tF) => tF.name === tFName);
@@ -25,7 +25,7 @@ const translateWithTargetedTFName = (language: Languages, keyFullPath: string, t
     return keyPathValue;
 };
 
-const translateWithoutTargetedTFName = (language: Languages, keyFullPath: string, tFs: TFs) => {
+const translateWithoutTargetedTFName = (language: Language, keyFullPath: string, tFs: TFs) => {
     const splittedKeys = splitAllKeys(keyFullPath);
     const { tF, value } = findKeyPathValueFromTFs(splittedKeys, tFs);
     const tFNamesRange = `{${tFs.map((currentTF) => currentTF.name).join(' | ')}}`;
@@ -48,7 +48,7 @@ const solveVariables = (translatedValue: string, variables: TranslationVariables
     }, translatedValue);
 };
 
-export const translate = (language: Languages, keyFullPath: string, tFs?: TFs, variables?: TranslationVariables): string => {
+export const translate = (language: Language, keyFullPath: string, tFs?: TFs, variables?: TranslationVariables): string => {
     if (!tFs || !Array.isArray(tFs) || tFs.length < 1) return '';
 
     let translatedValue;

@@ -1,19 +1,18 @@
-import { Languages } from '../types';
+import { Language, LanguageContextConfig } from '../types';
 import { DEFAULT_QUERY_PARAM } from '../constants';
 
-export const updateLanguageQueryParam = (value: Languages): void => {
+export const updateLanguageQueryParam = (value: Language): void => {
     const queryParams = new URLSearchParams(window.location.search);
     queryParams.set(DEFAULT_QUERY_PARAM, value);
     window.history.pushState(null, 'null', `?${queryParams.toString()}`);
 };
 
-export const getInitialLanguage = (defaultLanguage?: string): Languages => {
-    console.log('defaultLanguage: ', defaultLanguage);
-    const { LANGUAGE_FR, LANGUAGE_EN } = Languages;
+export const getInitialLanguage = (config: LanguageContextConfig): Language => {
+    const { defaultLanguage, languages } = config;
     const queryParams = new URLSearchParams(window.location.search);
-    const paramLanguage = queryParams.get(DEFAULT_QUERY_PARAM) as Languages;
-    if ([LANGUAGE_EN, LANGUAGE_FR].includes(paramLanguage)) {
+    const paramLanguage = queryParams.get(DEFAULT_QUERY_PARAM);
+    if (paramLanguage && languages.includes(paramLanguage)) {
         return paramLanguage;
     }
-    return LANGUAGE_FR;
+    return defaultLanguage || languages[0];
 };

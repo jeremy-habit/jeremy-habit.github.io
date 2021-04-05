@@ -1,10 +1,10 @@
-import { Languages, TFName } from '../types';
+import { Language, TFName } from '../types';
 import { AUTHORIZED_HTML_TAGS } from '../constants';
 
-export const errorObjectGiven = (language: Languages, keyPath: string, tFName?: TFName): string =>
+export const errorObjectGiven = (language: Language, keyPath: string, tFName?: TFName): string =>
     `The key ${keyPath} from ${language}/${tFName} is an object. String expected`;
 
-export const errorKeyDoesntExists = (language: Languages, keyPath: string, tFName: TFName): string =>
+export const errorKeyDoesntExists = (language: Language, keyPath: string, tFName: TFName): string =>
     `The key ${keyPath} doesn't exists in ${language}/${tFName}`;
 
 export const errorTooManySeparators = (separator: string, keyFullPath: string): string =>
@@ -24,3 +24,5 @@ export const errorVariableisMissing = (searchedVariable: string, translatedValue
 
 export const errorForbiddenHtmlTags = (translatedValue: string): string =>
     `The value "${translatedValue}" contains forbidden html tags. Only "${AUTHORIZED_HTML_TAGS.join(', ')}" are authorized.`;
+
+export const errorUseLanguageContext = (): string => `useLanguageContext must be used within a LanguageContextProvider`;

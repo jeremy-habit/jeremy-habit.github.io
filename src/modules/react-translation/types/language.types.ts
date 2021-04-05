@@ -1,11 +1,15 @@
 import { Dispatch, SetStateAction } from 'react';
 
-export enum Languages {
-    LANGUAGE_FR = 'fr',
-    LANGUAGE_EN = 'en',
-}
+export type Language = string;
+
+export type Languages = Language[];
 
 export interface LanguageContextState {
-    language: Languages;
-    setLanguage: Dispatch<SetStateAction<Languages>>;
+    language: Language;
+    setLanguage: Dispatch<SetStateAction<Language>>;
+}
+
+export interface LanguageContextConfig {
+    languages: Languages;
+    defaultLanguage?: Language;
 }

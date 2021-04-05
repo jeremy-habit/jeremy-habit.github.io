@@ -4,9 +4,9 @@ import { Translator, LanguageContextProvider } from '#modules/react-translation'
 
 export const App: FC = () => {
     return (
-        <LanguageContextProvider>
+        <LanguageContextProvider config={{ defaultLanguage: 'FR' }}>
             <TopBar />
-            <Translator keyFullPath="common:welcome.coucou" variables={{ sd: 'titre en gras' }} />
+            <Translator keyFullPath="common:welcome.coucou" variables={{ monster: 'disizilla' }} />
         </LanguageContextProvider>
     );
 };

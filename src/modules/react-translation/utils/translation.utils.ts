@@ -1,7 +1,16 @@
 import { Languages, TFs, TranslationVariables } from '../types';
-import { getKeyPathValue, findKeyPathValueFromTFs, splitAllKeys, splitKeyFullPath, hasTFName } from './keyFullPath.utils';
-import { errorObjectGiven, errorKeyDoesntExists, errorTFNotAvailable, errorVariableisMissing } from './errors.utils';
-import { VARIABLE_PREFIX, VARIABLE_SUFFIX } from '#modules/react-translation/constants';
+import {
+    errorObjectGiven,
+    errorKeyDoesntExists,
+    errorTFNotAvailable,
+    errorVariableisMissing,
+    getKeyPathValue,
+    findKeyPathValueFromTFs,
+    splitAllKeys,
+    splitKeyFullPath,
+    hasTFName,
+} from './index';
+import { VARIABLE_PREFIX, VARIABLE_SUFFIX } from '../constants';
 
 const translateWithTargetedTFName = (language: Languages, keyFullPath: string, tFs: TFs) => {
     const { tFName, keyPath } = splitKeyFullPath(keyFullPath);
@@ -27,7 +36,7 @@ const translateWithoutTargetedTFName = (language: Languages, keyFullPath: string
     return value;
 };
 
-export const solveVariables = (translatedValue: string, variables: TranslationVariables): string => {
+const solveVariables = (translatedValue: string, variables: TranslationVariables): string => {
     return Object.entries(variables).reduce((acc, curr) => {
         const variable = {
             key: curr[0],
@@ -50,5 +59,7 @@ export const translate = (language: Languages, keyFullPath: string, tFs?: TFs, v
         translatedValue = translateWithoutTargetedTFName(language, keyFullPath, tFs);
     }
 
-    return variables ? solveVariables(translatedValue, variables) : translatedValue;
+    if (variables) translatedValue = solveVariables(translatedValue, variables);
+
+    return translatedValue;
 };

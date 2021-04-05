@@ -1,4 +1,5 @@
-import { Languages, TFName } from '#modules/react-translation/types';
+import { Languages, TFName } from '../types';
+import { AUTHORIZED_HTML_TAGS } from '../constants';
 
 export const errorObjectGiven = (language: Languages, keyPath: string, tFName?: TFName): string =>
     `The key ${keyPath} from ${language}/${tFName} is an object. String expected`;
@@ -20,3 +21,6 @@ export const errorTFNotAvailable = (tFName: TFName): string =>
 
 export const errorVariableisMissing = (searchedVariable: string, translatedValue: string): string =>
     `The variable ${searchedVariable} is missing in : "${translatedValue}"`;
+
+export const errorForbiddenHtmlTags = (translatedValue: string): string =>
+    `The value "${translatedValue}" contains forbidden html tags. Only "${AUTHORIZED_HTML_TAGS.join(', ')}" are authorized.`;

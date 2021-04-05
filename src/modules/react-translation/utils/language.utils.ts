@@ -7,7 +7,8 @@ export const updateLanguageQueryParam = (value: Languages): void => {
     window.history.pushState(null, 'null', `?${queryParams.toString()}`);
 };
 
-export const getInitialLanguage = (): Languages => {
+export const getInitialLanguage = (defaultLanguage?: string): Languages => {
+    console.log('defaultLanguage: ', defaultLanguage);
     const { LANGUAGE_FR, LANGUAGE_EN } = Languages;
     const queryParams = new URLSearchParams(window.location.search);
     const paramLanguage = queryParams.get(DEFAULT_QUERY_PARAM) as Languages;

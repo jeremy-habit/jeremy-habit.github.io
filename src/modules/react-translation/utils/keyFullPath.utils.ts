@@ -1,6 +1,6 @@
 import { DEFAULT_TF_NAME, KEYS_SEPARATOR, TFS_SEPARATOR } from '../constants';
 import { KeyFullPathSplitted, KeyPathValueFound, KeyPathValue, TF, TFs } from '../types';
-import { errorKeyPathEmpty, errorTooManySeparators, errorTFNameEmpty } from '../utils/errors.utils';
+import { errorKeyPathEmpty, errorTooManySeparators, errorTFNameEmpty } from '../utils';
 
 export const getKeyPathValue = (splittedKeys: string[], tF: TF): KeyPathValue => {
     return splittedKeys.reduce((acc: KeyPathValue, splittedKey) => {

@@ -4,8 +4,14 @@ import { getInitialLanguage, updateLanguageQueryParam } from './utils/language.u
 
 export const languageContext = createContext<LanguageContextState | undefined>(undefined);
 
-export const LanguageContextProvider: FC = ({ children }) => {
-    const [language, setLanguage] = useState(getInitialLanguage());
+export interface Props {
+    config?: {
+        defaultLanguage: string;
+    };
+}
+
+export const LanguageContextProvider: FC<Props> = ({ children, config }) => {
+    const [language, setLanguage] = useState(getInitialLanguage(config?.defaultLanguage));
 
     useEffect(() => {
         updateLanguageQueryParam(language);

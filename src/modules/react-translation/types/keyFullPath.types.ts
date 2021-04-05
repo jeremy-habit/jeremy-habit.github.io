@@ -1,4 +1,4 @@
-import { TF, TFContent, TFName } from '#modules/react-translation/types/translationFiles.types';
+import { TF, TFContent, TFName } from './translationFiles.types';
 
 export type KeyFullPathSplitted = { tFName: TFName; keyPath: string };
 

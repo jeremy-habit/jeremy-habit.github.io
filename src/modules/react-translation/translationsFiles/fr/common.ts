@@ -1,5 +1,5 @@
 export default {
     welcome: {
-        coucou: 'BONjour  {{sd}} ',
+        coucou: 'FR : {{monster}} BONSOIR <b>unos</b> and <b>dos</b>',
     },
 };

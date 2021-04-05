@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useTranslation } from '../hooks/useTranslation';
-import { splitKeyFullPath } from '../utils/keyFullPath.utils';
+import { splitKeyFullPath } from '../utils';
 import { TranslationVariables } from '../types';
 
 interface Props {

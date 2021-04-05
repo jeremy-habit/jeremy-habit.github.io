@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TFNames, TFs, TranslationVariables, UseTranslationHook } from '../types';
-import { DEFAULT_TF_NAME } from '../constants';
+import { BOLD_TAG, DEFAULT_TF_NAME, ITALIC_TAG, REGEX_HTML_TAGS } from '../constants';
 import { useLanguageContext } from '../context';
-import { translate } from '../utils/translation.utils';
-import { importTF } from '../utils/translationFiles.utils';
+import { createMarkup, importTF, translate, errorForbiddenHtmlTags } from '../utils';
 
 export const useTranslation = (tFNames: TFNames = [DEFAULT_TF_NAME]): UseTranslationHook => {
     const { language } = useLanguageContext();
@@ -18,13 +17,21 @@ export const useTranslation = (tFNames: TFNames = [DEFAULT_TF_NAME]): UseTransla
         });
     };
 
+    const renderTranslation = (keyFullPath: string, variables?: TranslationVariables) => {
+        const translatedValue = translate(language, keyFullPath, tFs, variables);
+
+        const htmlTagsMatches = translatedValue.match(REGEX_HTML_TAGS);
+        if (htmlTagsMatches?.some((htmlTagMatch) => !(htmlTagMatch === BOLD_TAG.opening || htmlTagMatch === ITALIC_TAG.opening)))
+            throw new Error(errorForbiddenHtmlTags(translatedValue));
+
+        return <span dangerouslySetInnerHTML={createMarkup(translatedValue)} />;
+    };
+
     useEffect(() => {
         prepareTFs();
     }, [language]);
 
     return {
-        translate: (keyFullPath: string, variables?: TranslationVariables) => {
-            return translate(language, keyFullPath, tFs, variables);
-        },
+        translate: renderTranslation,
     };
 };

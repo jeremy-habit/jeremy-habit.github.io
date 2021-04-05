@@ -1,4 +1,4 @@
-import { KeyPathValue } from '#modules/react-translation/types/keyFullPath.types';
+import { KeyPathValue } from './keyFullPath.types';
 
 export type TFName = string;
 

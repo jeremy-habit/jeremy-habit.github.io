@@ -5,7 +5,7 @@ import { LANGUAGES } from '#constants/languages.constants';
 
 export const App: FC = () => {
     return (
-        <LanguageContextProvider config={{ languages: LANGUAGES }}>
+        <LanguageContextProvider config={{ languages: LANGUAGES, translationFilesDirectory: 'src/translationsFiles' }}>
             <TopBar />
             <Translator keyFullPath="common:welcome.coucou" variables={{ monster: 'disizilla' }} />
         </LanguageContextProvider>

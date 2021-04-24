@@ -5,12 +5,12 @@ import { useLanguageContext } from '../context';
 import { createMarkup, importTF, translate, errorForbiddenHtmlTags } from '../utils';
 
 export const useTranslation = (tFNames: TFNames = [DEFAULT_TF_NAME]): UseTranslationHook => {
-    const { language } = useLanguageContext();
+    const { language, translationFilesDirectory } = useLanguageContext();
     const [tFs, setTFs] = useState<TFs | undefined>();
 
     const prepareTFs = async () => {
         const promises = tFNames.map((tFName) => {
-            return importTF(language, tFName);
+            return importTF(language, tFName, translationFilesDirectory);
         });
         await Promise.all(promises).then((values) => {
             setTFs(values);

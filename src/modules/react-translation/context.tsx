@@ -16,7 +16,11 @@ export const LanguageContextProvider: FC<Props> = ({ children, config }) => {
         updateLanguageQueryParam(language);
     }, [language]);
 
-    return <languageContext.Provider value={{ language, setLanguage }}>{children}</languageContext.Provider>;
+    return (
+        <languageContext.Provider value={{ language, setLanguage, translationFilesDirectory: config.translationFilesDirectory }}>
+            {children}
+        </languageContext.Provider>
+    );
 };
 
 export const useLanguageContext = (): LanguageContextState => {
